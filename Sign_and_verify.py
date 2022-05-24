@@ -46,6 +46,8 @@ def getRandom(inputVideo):
         return True
     def getBase(n):
         return 2**(n-1)+1
+    def getTopBase(n):
+        return 2**n - 1
     #Get R, G, B from igm 
     def R(x, y, img):
         return img[y, x, 2]
@@ -58,7 +60,7 @@ def getRandom(inputVideo):
         return (R(x, y, img) << 16) + (G(x, y, img)  << 8) + B(x, y, img) 
         
     firstBase = getBase(512)
-    secondBase = getBase(512)
+    secondBase = getTopBase(512)
 
     firstPrime = 0 
     secondPrime = 0
@@ -157,7 +159,7 @@ def getRandom(inputVideo):
                     firstPrimeFlag = True
             
             if(not secondPrimeFlag):
-                secondBase += int(buforG, 2)
+                secondBase -= int(buforG, 2)
                 for divisor in first_primes_list:
                     if secondBase % divisor == 0 and divisor**2 <= secondBase:
                         break
